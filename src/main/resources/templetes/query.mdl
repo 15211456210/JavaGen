@@ -1,0 +1,46 @@
+package ${package}.query;
+
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.Data;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import ${package}.entity.${entityClassName};
+<#foreach item in imports>
+import ${item.importClassName};<#end>
+
+/**
+ * @author ZCP
+ * @title:
+ * @projectName JavaGen
+ * @description: ${entityClassName}查询实体
+ * @date 2022/4/28 15:10
+ */
+@Data
+public class ${queryClassName}{
+
+<#foreach field in fields><#if test="${field.isQueryField}='true[bool]'">
+    /**
+     * ${field.comment}
+     */
+    private ${field.className} ${field.name};
+<#end><#end>
+    /**
+     * 分页
+     */
+    private Page<${entityClassName}> page;
+
+    public Wrapper<${entityClassName}> getWrapper() {
+
+        QueryWrapper<${entityClassName}> queryWrapper = new QueryWrapper();
+<#foreach field in fields><#if test="${field.isQueryField}='true[bool]'">
+        if (${field.name} != null) {<#if test="${field.queryType} = 'like[str]'">
+            queryWrapper.and(QueryWrapper -> QueryWrapper.like("${field.columnName}", ${field.name}));<#end><#if test="${field.queryType} = 'eq[str]'">
+            queryWrapper.and(QueryWrapper -> QueryWrapper.eq("${field.columnName}", ${field.name}));<#end>
+        }<#end><#end>
+        return queryWrapper;
+    }
+
+
+}

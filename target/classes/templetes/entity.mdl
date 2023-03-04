@@ -1,0 +1,30 @@
+package ${package}.entity;
+
+import com.baomidou.mybatisplus.annotation.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonFormat;
+<#foreach item in imports>
+import ${item.importClassName};<#end>
+
+@ApiModel(value = "${tableComment}", description = "${tableComment}")
+@TableName("${tableName}")
+@Data
+public class ${entityClassName} implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+<#foreach field in fields>
+    /**
+     * ${field.comment}
+     */
+    @ApiModelProperty(value = "${field.comment}")<#if test="${field.isPrimaryKey} = 'true[bool]'" >
+    @TableField(value = "${field.columnName}"<#if test="${field.name} = 'createDate[str]' || ${field.comment} = '逻辑键[str]'" >,fill = FieldFill.INSERT<#end><#if test="${field.name} = 'updateDate[str]'" >,fill = FieldFill.INSERT_UPDATE<#end>)
+    @TableId(type = IdType.AUTO)<#end><#if test="${field.comment} = '逻辑键[str]'" >
+    @TableLogic<#end><#if test="${field.className} = 'LocalDateTime[str]'" >
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")<#end>
+    private ${field.className} ${field.name};
+<#end>
+
+}

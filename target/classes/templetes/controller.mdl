@@ -1,0 +1,77 @@
+package ${package}.controller;
+
+import ${package}.entity.${entityClassName};
+import ${package}.service.${serviceClassName};
+import ${package}.query.${queryClassName};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import java.util.List;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import ${primaryKeyClassType};
+
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * <p>
+ *  ${entityClassName}前端控制器
+ * </p>
+ *
+ * @author zcp
+ * @since 2022-04-22
+ */
+
+@RestController
+@RequestMapping("/${requestPath}/${entityClassName}")
+public class ${controllerClassName} {
+    @Autowired
+    private ${serviceClassName} ${serviceInstanceName};
+
+    @PostMapping("/page")
+    @ApiOperation(value = "分页查询",notes = "page")
+    public Page<${entityClassName}> page(@RequestBody ${queryClassName} query){
+        return ${serviceInstanceName}.page(query.getPage(),query.getWrapper());
+    }
+
+    @PostMapping("/list")
+    @ApiOperation(value = "列表查询",notes = "list")
+    public List<${entityClassName}> list(@RequestBody(required = false)${queryClassName} query){
+        return ${serviceInstanceName}.list(query.getWrapper());
+    }
+
+    @GetMapping("/detail")
+    @ApiOperation(value = "查看详情",notes = "detail")
+    public ${entityClassName} get${entityClassName}ById(${simplePrimaryKeyClassType} id){
+        return ${serviceInstanceName}.getById(id);
+    }
+
+    @PostMapping("/save")
+    @ApiOperation(value = "新增",notes = "save")
+    public boolean save${entityClassName}(@RequestBody ${entityClassName} ${entityInstanceName}){
+        return ${serviceInstanceName}.save(${entityInstanceName});
+    }
+
+    @PostMapping("/saveOrUpdate")
+    @ApiOperation(value = "新增/修改",notes = "saveOrUpdate")
+    public boolean saveOrUpdate(@RequestBody ${entityClassName} ${entityInstanceName}){
+        return ${serviceInstanceName}.saveOrUpdate(${entityInstanceName});
+    }
+
+    @PostMapping("/update")
+    @ApiOperation(value = "修改",notes = "update")
+    public boolean update(@RequestBody ${entityClassName} ${entityInstanceName}){
+        return ${serviceInstanceName}.updateById(${entityInstanceName});
+    }
+
+    @PostMapping("/delete")
+    @ApiOperation(value = "删除",notes = "delete")
+    public boolean delete(${simplePrimaryKeyClassType} id){
+        return ${serviceInstanceName}.removeById(id);
+    }
+
+}

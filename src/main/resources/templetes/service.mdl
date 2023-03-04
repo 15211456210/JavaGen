@@ -1,0 +1,17 @@
+package ${package}.service;
+
+import ${package}.entity.${entityClassName};
+import com.baomidou.mybatisplus.extension.service.IService;
+import io.swagger.annotations.Api;
+
+import java.util.List;
+
+/**
+ * @auther zcp
+ * @create 2022-04-22
+ * @describe ${entityClassName} service
+ */
+@Api(value = "${entityClassName}服务类")
+public interface ${serviceClassName} extends IService<${entityClassName}> {
+
+}
